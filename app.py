@@ -9,11 +9,16 @@ import pandas as pd
 df = pd.read_csv('dth_data_1.csv')
 
 app = Dash()    
-server = app.server
+server = app.server  
 
 #server = app.server
 
 app.layout = html.Div([
+
+    html.H1(children='Churn Analysis'),
+    html.Div(children='''
+        Dashboard
+    '''),
     dcc.Graph(id="graph"),
     html.Button("Switch Axis", id='btn', n_clicks=0)
 ])
