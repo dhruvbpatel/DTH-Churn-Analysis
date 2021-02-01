@@ -10,7 +10,7 @@ df = pd.read_csv('dth_data_1.csv')
 
 app = Dash()    
 
-server = app.server
+#server = app.server
 
 app.layout = html.Div([
     dcc.Graph(id="graph"),
@@ -30,5 +30,5 @@ def display_graph(n_clicks):
 
 
 
-if __name__ == '__main__':
-    app.run_server(debug=True)
+#if __name__ == '__main__':
+ #   app.run_server(debug=True)
