@@ -15,7 +15,7 @@ server = app.server
 
 app.layout = html.Div([
 
-    html.H1(children='Churn Analysis'),
+    html.H1(children='Churn Analysis G22'),
     html.Div(children='''
         Dashboard
     '''),
