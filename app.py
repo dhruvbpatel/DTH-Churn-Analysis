@@ -58,6 +58,7 @@ import seaborn as sns
 
 data = pd.read_csv("dth_data_1.csv")
 
+
 ott_subs = dict(data.ott_subscription.value_counts())
 fig = px.bar(x=list(ott_subs.keys()), y=list(ott_subs.values()), title="Popularity of OTT Platform ")
 
@@ -72,6 +73,11 @@ fig4 = px.bar(x=list(cust_class.keys()), y=list(cust_class.values()), title="Cus
 
 churn = dict(data.churn.value_counts())
 fig5 = px.bar(x=list(churn.keys()), y=list(churn.values()), title="Churn")
+
+
+
+
+
 
 
 VALID_USERNAME_PASSWORD_PAIRS = {
@@ -138,6 +144,8 @@ app.layout = html.Div(className='row', children=[
            ])
     ])
 ])
+
+server = app.server
 
 
 if __name__ == '__main__':
