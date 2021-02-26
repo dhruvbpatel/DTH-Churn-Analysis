@@ -5,3 +5,4 @@ dash
 gunicorn
 plotly
 seaborn
+dash_auth
