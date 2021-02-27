@@ -23,9 +23,9 @@ def no_to_percentage(n):
 
 data = pd.read_csv("dth_data_1.csv")
 
-#colour = ["#003f5c", "#396582", "#668eaa", "#93bad4", "#c2e7ff"]
+colour = ["#2c3e50", "#e74c3c", "#bdc3c7", "#f39c12", "#7ccc63"]
 
-colour = ["#290934", "#40204a", "#583861", "#705079", "#896a91"]
+#colour = ["#290934", "#40204a", "#583861", "#705079", "#896a91"]
 #colour = ["#8a0e4a", "#9a305c", "#a9496e", "#b86181", "#c67894"]
 
 
@@ -35,9 +35,13 @@ fig = px.bar(x=list(ott_subs.keys()), y=list(ott_subs.values()), color=colour, c
              )
 
 dth_pack = dict(data.dth_pack.value_counts())
-fig2 = px.bar(x=list(dth_pack.keys()), y=list(dth_pack.values()), color=colour[:3], color_discrete_map="identity", title="<b>DTH Pack distribution</b>",
+'''fig2 = px.bar(x=list(dth_pack.keys()), y=list(dth_pack.values()), color=colour[:3], color_discrete_map="identity", title="<b>DTH Pack distribution</b>",
               labels={'x':'DTH Pack Type', 'y':'Number of users'}
-              )
+              )'''
+    
+fig2 = go.Figure(data=[go.Pie(labels=list(dth_pack.keys()), values=list(dth_pack.values()))])
+fig2.update_layout(title_text="<b>DTH Pack distribution</b>")
+fig2.update_traces(marker=dict(colors=["#2c3e50", "#e74c3c", "#bdc3c7"]))
 
 '''sub_status = dict(data.subscription_status.value_counts())
 fig3 = px.bar(x=list(sub_status.keys()), y=list(sub_status.values()), title="Subscription status")'''
@@ -46,7 +50,7 @@ sub_status = dict(data.subscription_status.value_counts())
 #fig3 = px.pie(values=list(sub_status.values()), names=list(sub_status.keys()),color_discrete_sequence= ["#003f5c", "#668eaa"], title="<b>Subscription status</b>",)
 fig3 = go.Figure(data=[go.Pie(labels=list(sub_status.keys()), values=list(sub_status.values()), pull=[0, 0.1])])
 fig3.update_layout(title_text="<b>Subscription status</b>")
-fig3.update_traces(marker=dict(colors=["#003f5c", "#668eaa"]))
+fig3.update_traces(marker=dict(colors=["#2c3e50", "#e74c3c"]))
 
 cust_class = dict(data.customer_class.value_counts())
 fig4 = px.bar(x=list(cust_class.keys()), y=list(cust_class.values()),color=colour[:3], color_discrete_map="identity", title="<b>Customer class</b>",
@@ -109,10 +113,11 @@ app.layout = html.Div(className='row', children=[
    
    html.Div([
                  html.Div([
-                    html.Div([html.P("Active Customer"),html.P(no_with_comma(active_customer))],style = mini_container_style),
-                    html.Div([html.P("Total Customer "),html.P(no_with_comma(total_customer))],style = mini_container_style),
-                    html.Div([html.P("Churn Rate"),html.P(no_to_percentage(churn_rate))],style = mini_container_style),
-                    html.Div([html.P("Monthly revenue"),html.P(no_with_comma(expected_monthly_income))],style = mini_container_style),
+                    html.Div([html.P(html.B("Active Customer", style = {'font-size': '25px'})),html.P(no_with_comma(active_customer), style = {'font-size': '22px'})],style = mini_container_style),
+                    #html.Div([html.P("<b>Active Customer</b>"),html.P(no_with_comma(active_customer))],style = mini_container_style),
+                    html.Div([html.P(html.B("Total Customer", style = {'font-size': '25px'})),html.P(no_with_comma(total_customer), style = {'font-size': '22px'})],style = mini_container_style),
+                    html.Div([html.P(html.B("Churn Rate", style = {'font-size': '25px'})),html.P(no_to_percentage(churn_rate), style = {'font-size': '22px'})],style = mini_container_style),
+                    html.Div([html.P(html.B("Monthly revenue", style = {'font-size': '25px'})),html.P(no_with_comma(expected_monthly_income), style = {'font-size': '22px'})],style = mini_container_style),
                     
                          ], style = whole_container)
                 ], className='row'),
