@@ -1,2 +1,2 @@
-# dash_deployment
-test repo for dash_deployment
+# DTH Churn Analysis
+Repo for DTH customer churn analysis project
