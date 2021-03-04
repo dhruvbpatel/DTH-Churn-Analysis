@@ -1,6 +1,8 @@
 import pandas as pd
 
 data = pd.read_csv("dth_data_1.csv")
+data_pred = pd.read_csv("./saved_models/train_data_X_pred_xgb01_70acc.csv")
+
 
 # Query to fetch data in dashboard
 active_customer = dict(data.subscription_status.value_counts())

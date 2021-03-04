@@ -1,6 +1,6 @@
 import dash_core_components as dcc
 import dash_html_components as html
-from data_reader import data, active_customer, total_customer, expected_monthly_income, churn_rate
+from data_reader import data,data_pred, active_customer, total_customer, expected_monthly_income, churn_rate
 import dash_table
 
 from graphs import *
@@ -162,9 +162,8 @@ def two_tab_layout():
                     html.Div([
                         dash_table.DataTable(
                             id='table',
-                            columns=[{"name": i, "id": i} for i in data.columns],
-                            style_cell={'textAlign': 'left'},
-                            data=data.to_dict('records'),
+                            columns=[{"name": i, "id": i} for i in data_pred.columns],
+                            data=data_pred.to_dict('records'),
                         )
                     ]),
 

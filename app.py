@@ -9,7 +9,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 import pandas as pd
-from data_reader import data
+from data_reader import data , data_pred
 
 
 from layouts import home_layout,two_tab_layout
