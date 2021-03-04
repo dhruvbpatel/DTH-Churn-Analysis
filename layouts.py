@@ -34,6 +34,17 @@ whole_container = {'display': 'flex',
                     'text-align': 'center',
                     }
 
+tab_style = {
+    
+    'fontWeight': 'bold',
+    'font-size': '22px'
+}
+
+tab_selected_style = {
+    'fontWeight': 'bold',
+    'font-size': '22px'
+}
+
 
 
 
@@ -90,7 +101,7 @@ def home_layout():
 def two_tab_layout():
     return html.Div([
         dcc.Tabs(id='tabs-example', value='tab-1', children=[
-            dcc.Tab(label='Home Tab', value='tab-1', children=[
+            dcc.Tab(label='Home Tab', value='tab-1', style=tab_style, selected_style=tab_selected_style, children=[
                     html.Br(),
                     html.Br(),
                     html.H1(children="Churn Analysis-Dashboard",
@@ -141,7 +152,7 @@ def two_tab_layout():
 
 
 
-            dcc.Tab(label='Churn Predictions', value='tab-2', children=[
+            dcc.Tab(label='Churn Predictions', value='tab-2', style=tab_style, selected_style=tab_selected_style, children=[
 
                  html.Br(),
                     html.Br(),
@@ -152,6 +163,7 @@ def two_tab_layout():
                         dash_table.DataTable(
                             id='table',
                             columns=[{"name": i, "id": i} for i in data.columns],
+                            style_cell={'textAlign': 'left'},
                             data=data.to_dict('records'),
                         )
                     ]),
