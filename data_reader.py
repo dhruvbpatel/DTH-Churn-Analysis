@@ -15,3 +15,4 @@ churn_rate = (churn_rate[True]/(churn_rate[False]+churn_rate[True]))*100
 
 expected_monthly_income = data[data["subscription_status"]
                                == True]["dth_pack_price"].sum()
+
