@@ -1,5 +1,3 @@
-
-
 import dash
 import dash_auth
 
@@ -21,6 +19,7 @@ from data_reader import *
 
 #colour = ["#290934", "#40204a", "#583861", "#705079", "#896a91"]
 #colour = ["#8a0e4a", "#9a305c", "#a9496e", "#b86181", "#c67894"]
+
 
 
 VALID_USERNAME_PASSWORD_PAIRS = {
