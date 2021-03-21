@@ -1,7 +1,10 @@
 import pandas as pd
 
-data = pd.read_csv("dth_data_1.csv")
-data_pred = pd.read_csv("./saved_models/train_data_X_pred_xgb01_70acc.csv")
+data = pd.read_csv("dth_data_1.csv")     ## train data
+data_pred = pd.read_csv("./data/df_train_all_pred.csv")   ## predictions on all training data
+test_data = pd.read_csv("./saved_models/dth_test_data_5k.csv")  ## test data
+pred_changes = pd.read_csv("./data/df_final_pred_change.csv")   ## csv showing only changes in churn
+
 
 
 # Query to fetch data in dashboard

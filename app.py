@@ -38,17 +38,67 @@ server = app.server
 app.layout = two_tab_layout()
 
 
-# @app.callback(Output('tabs-example-content', 'children'),
-#               Input('tabs-example', 'value'))
-# def render_content(tab):
-#     if tab == 'tab-1':
-#         return html.Div([
-            
-#         ])
-#     elif tab == 'tab-2':
-#         return html.Div([
-#             # html.H3('Churn Predictions')
-#         ])
+## callbacks
+
+## dropdown callback - churn prediction tab
+@app.callback(
+    Output('table-div', 'children'),
+    Input('dropdown-table', 'value')
+)
+def update_datatable(value):
+
+    
+
+    if value == 'train':
+        dframe = data
+    elif value == 'test':
+        dframe = test_data
+    elif value == 'pred_res':
+        dframe = data_pred
+    elif value == 'churn_cust':
+        dframe = data_pred[data_pred['pred_churn']==1]
+    elif value == 'churn_changes':
+        dframe = pred_changes
+
+    return dash_table.DataTable(
+        id='table',
+
+        columns=[{"name": i, "id": i}
+                 for i in dframe.columns],
+        data=dframe.to_dict('records'),
+        page_size=15,
+        # fixed_rows={'headers': True},
+        
+        style_header={
+            'backgroundColor': 'rgb(230, 230, 230)',
+            'fontWeight': 'bold'
+        },
+
+        # style_header_conditional=[
+        #     {
+        #         'if':{
+        #             'filter_query':{churn}==True,
+        #             'column_id=':'churn'
+        #         },
+        #         'color':'red',
+        #         'fontWeight':'bold'
+        #     }
+        # ]
+
+    )
+
+## tab layout callback
+@app.callback(Output('tabs-example-content', 'children'),
+              Input('tabs-example', 'value'))
+def render_content(tab):
+    if tab == 'tab-1':
+        return html.Div([
+
+        ])
+    elif tab == 'tab-2':
+        return html.Div([
+            # html.H3('Churn Predictions')
+        ])
 
 
 if __name__ == '__main__':

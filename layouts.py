@@ -1,6 +1,6 @@
 import dash_core_components as dcc
 import dash_html_components as html
-from data_reader import data, data_pred, active_customer, total_customer, expected_monthly_income, churn_rate
+from data_reader import *
 import dash_table
 
 from graphs import *
@@ -188,12 +188,19 @@ def two_tab_layout():
 
 
                     html.Div([
-                        dash_table.DataTable(
-                            id='table',
-                            columns=[{"name": i, "id": i}
-                                     for i in data_pred.columns],
-                            data=data_pred.to_dict('records'),
-                        )
+                        dcc.Dropdown(
+                            id='dropdown-table',
+                            options=[
+                                {'label': 'Train Data', 'value': 'train'},
+                                {'label': 'Predicted Results', 'value': 'pred_res'},
+                                {'label': 'Test Data', 'value': 'test'},
+                                {'label': 'Churn Customers', 'value': 'churn_cust'},
+                                {'label': 'Churn Changes','value':'churn_changes'}
+                                
+                            ],
+                            value='train'
+                        ),
+                        
                     ]),
 
                     ]),
