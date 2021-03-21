@@ -1,19 +1,24 @@
 
-
 import dash
 import dash_auth
 
 import dash_html_components as html
 import dash_core_components as dcc
+from dash.dependencies import Input, Output
+
 import plotly.express as px
 import plotly.graph_objects as go
 
 import pandas as pd
-from data_reader import data , data_pred
+from data_reader import data, data_pred
 
 
-from layouts import home_layout,two_tab_layout
-from  callbacks import *
+from layouts import two_tab_layout
+import dash_table
+from data_reader import *
+
+
+# from  callbacks import *
 
 #colour = ["#290934", "#40204a", "#583861", "#705079", "#896a91"]
 #colour = ["#8a0e4a", "#9a305c", "#a9496e", "#b86181", "#c67894"]
@@ -41,13 +46,13 @@ app.layout = two_tab_layout()
 ## callbacks
 
 ## dropdown callback - churn prediction tab
+
 @app.callback(
     Output('table-div', 'children'),
     Input('dropdown-table', 'value')
 )
 def update_datatable(value):
-
-    
+   
 
     if value == 'train':
         dframe = data
