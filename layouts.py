@@ -117,7 +117,7 @@ def two_tab_layout():
 
 
             dcc.Tab(label='Churn Predictions', value='tab-2', style=tab_style, selected_style=tab_selected_style, children=[
-
+                
                  html.Br(),
                     html.Br(),
                     html.H1(children="Churn Predictions",
@@ -135,8 +135,7 @@ def two_tab_layout():
                     ], className='row'),
 
                     html.Br(),
-                    html.Br(),
-
+                    html.H6(children=["Select Dataset to be Displayed"], style={'text-align': 'center'}),
                     html.Div([
                         dcc.Dropdown(
                             id='dropdown-table',
@@ -148,12 +147,24 @@ def two_tab_layout():
                                 {'label': 'Churn Changes','value': 'churn_changes'}
                                 
                             ],
-                            value='train'
+                            value='pred_res'
                         ),
 
                     ]),
 
                     # html.Div(id='dd-output-container'),
+                    html.Br(),
+                    html.H6(children=["Select Columns to Display In table"],style={'text-align': 'center'}),
+                
+                    html.Div([
+                        dcc.Dropdown(
+                            id = 'dropdown-column-select',
+                            options=[], 
+                            multi=True,
+                            
+                        )
+                    ]),
+                    
                     html.Br(),
                     html.Br(),
 
