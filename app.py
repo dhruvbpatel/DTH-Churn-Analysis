@@ -1,4 +1,3 @@
-
 import dash
 import dash_auth
 
@@ -9,35 +8,28 @@ from dash.dependencies import Input, Output
 import plotly.express as px
 import plotly.graph_objects as go
 
+from data_reader import *
 import pandas as pd
-from data_reader import data, data_pred
-
 
 from layouts import tab_layout
 import dash_table
-from data_reader import *
+
 
 
 # from  callbacks import *
 
-#colour = ["#290934", "#40204a", "#583861", "#705079", "#896a91"]
-#colour = ["#8a0e4a", "#9a305c", "#a9496e", "#b86181", "#c67894"]
+# colour = ["#290934", "#40204a", "#583861", "#705079", "#896a91"]
+# colour = ["#8a0e4a", "#9a305c", "#a9496e", "#b86181", "#c67894"]
 
 
-VALID_USERNAME_PASSWORD_PAIRS = {
-    'admin': 'admin'
-}
+VALID_USERNAME_PASSWORD_PAIRS = {"admin": "admin"}
 
-external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
+external_stylesheets = ["https://codepen.io/chriddyp/pen/bWLwgP.css"]
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
-auth = dash_auth.BasicAuth(
-    app,
-    VALID_USERNAME_PASSWORD_PAIRS
-)
+auth = dash_auth.BasicAuth(app, VALID_USERNAME_PASSWORD_PAIRS)
 
 server = app.server
-
 
 
 app.layout = tab_layout()
@@ -47,18 +39,18 @@ app.layout = tab_layout()
 
 
 ## tab layout callback
-@app.callback(Output('tabs-example-content', 'children'),
-              Input('tabs-example', 'value'))
+@app.callback(
+    Output("tabs-example-content", "children"), Input("tabs-example", "value")
+)
 def render_content(tab):
-    if tab == 'tab-1':
-        return html.Div([
-
-        ])
-    elif tab == 'tab-2':
-        return html.Div([
-            # html.H3('Churn Predictions')
-        ])
-
+    if tab == "tab-1":
+        return html.Div([])
+    elif tab == "tab-2":
+        return html.Div(
+            [
+                # html.H3('Churn Predictions')
+            ]
+        )
 
 
 ## dropdown callback - churn prediction tab
@@ -67,7 +59,7 @@ def render_content(tab):
 #     Input('dropdown-table', 'value')
 # )
 # def update_datatable(value):
-   
+
 #     if value == 'train':
 #         dframe = data
 #     elif value == 'test':
@@ -86,7 +78,7 @@ def render_content(tab):
 #         data=dframe.to_dict('records'),
 #         page_size=15,
 #         fixed_rows={'headers': True},
-        
+
 #         style_header={
 #             'backgroundColor': 'rgb(230, 230, 230)',
 #             'fontWeight': 'bold'
@@ -95,89 +87,74 @@ def render_content(tab):
 
 ## multi select dropdown column
 @app.callback(
-    Output('dropdown-column-select', 'options'),
-    Input('dropdown-table', 'value'),
+    Output("dropdown-column-select", "options"),
+    Input("dropdown-table", "value"),
 )
 def dropdown_columns(value):
-    if value == 'train':
+    if value == "train":
         dframe = data
-
-    elif value == 'test':
+    elif value == "test":
         dframe = test_data
-    elif value == 'pred_res':
+    elif value == "pred_res":
         dframe = data_pred
-    elif value == 'churn_cust':
-        dframe = data_pred[data_pred['pred_churn'] == 1]
-    elif value == 'churn_changes':
+    elif value == "churn_cust":
+        dframe = data_pred[data_pred["pred_churn"] == 1]
+    elif value == "churn_changes":
         dframe = pred_changes
 
     options = []
     for col in dframe:
-        options.append({'label': '{}'.format(col, col), 'value': col})
+        options.append({"label": "{}".format(col, col), "value": col})
 
     return options
 
+
 ## update table according to multi select dropdown column
 
-@app.callback(
-    Output('table-div','children'),
-    Input('dropdown-table','value'),
-    Input('dropdown-column-select','value')
-)
-def update_datatable_column(data_value,col_value):
 
-    if data_value == 'train':
+@app.callback(
+    Output("table-div", "children"),
+    Input("dropdown-table", "value"),
+    Input("dropdown-column-select", "value"),
+)
+def update_datatable_column(data_value, col_value):
+
+    if data_value == "train":
         dframe = data
-    elif data_value == 'test':
+    elif data_value == "test":
         dframe = test_data
-    elif data_value == 'pred_res':
+    elif data_value == "pred_res":
         dframe = data_pred
-    elif data_value == 'churn_cust':
-        dframe = data_pred[data_pred['pred_churn'] == 1]
-    elif data_value == 'churn_changes':
+    elif data_value == "churn_cust":
+        dframe = data_pred[data_pred["pred_churn"] == 1]
+    elif data_value == "churn_changes":
         dframe = pred_changes
-    
+
     if col_value:
         dframe = pd.DataFrame(dframe[col_value])
-   
-
 
     return dash_table.DataTable(
-    id='table',
-
-    columns=[{"name": i, "id": i}
-                for i in dframe.columns],
-    data=dframe.to_dict('records'),
-    page_size=15,
-    fixed_rows={'headers': True},
-    filter_action='native',
-       
-    style_header={
-        'backgroundColor': 'rgb(230, 230, 230)',
-        'fontWeight': 'bold'
-    },
-        style_table={'height': 400},
+        id="table",
+        columns=[{"name": i, "id": i} for i in dframe.columns],
+        data=dframe.to_dict("records"),
+        page_size=15,
+        fixed_rows={"headers": True},
+        filter_action="native",
+        style_header={"backgroundColor": "rgb(230, 230, 230)", "fontWeight": "bold"},
+        style_table={"height": 400},
         style_data={
-        'width': '{}%'.format(100. / len(dframe.columns)),
-        'textOverflow': 'hidden'
-    }
+            "width": "{}%".format(100.0 / len(dframe.columns)),
+            "textOverflow": "hidden",
+        }
         # css=[{
         #     'selector': 'table',
         #     'rule': 'table-layout: fixed'  # note - this does not work with fixed_rows
         # }],
-
-        ,style_cell={
-        'min-width': '100px'
-    },
-        css=[
-        {'selector': '.row-1', 'rule': 'min-height: 500px;'}
-    ]
-
-)
-
-    
+        ,
+        style_cell={"min-width": "100px"},
+        css=[{"selector": ".row-1", "rule": "min-height: 500px;"}],
+    )
 
 
-
-if __name__ == '__main__':
-    app.run_server(debug=False,port=8051)
+if __name__ == "__main__":
+    app.run_server(debug=False, port=8051)
