@@ -15,7 +15,6 @@ from layouts import tab_layout
 import dash_table
 
 
-
 # from  callbacks import *
 
 # colour = ["#290934", "#40204a", "#583861", "#705079", "#896a91"]

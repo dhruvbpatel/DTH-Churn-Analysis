@@ -2,8 +2,14 @@ import plotly.express as px
 import plotly.graph_objects as go
 from data_reader import *
 import colorlover as cl
-from sklearn.metrics import accuracy_score, r2_score, confusion_matrix, plot_confusion_matrix, roc_auc_score, roc_curve
-
+from sklearn.metrics import (
+    accuracy_score,
+    r2_score,
+    confusion_matrix,
+    plot_confusion_matrix,
+    roc_auc_score,
+    roc_curve,
+)
 
 
 colour = ["#2c3e50", "#e74c3c", "#bdc3c7", "#f39c12", "#7ccc63"]
@@ -69,3 +75,70 @@ fig5 = px.bar(
 
 ## roc curve plot
 
+
+def serve_roc_curve():
+
+    fpr, tpr, threshold = roc_curve(df_churn, preds)
+    auc_score = roc_auc_score(y_true=df_churn, y_score=preds)
+
+    trace0 = go.Scatter(
+        x=fpr, y=tpr, mode="lines", name="Test Data", marker={"color": "#13c6e9"}
+    )
+
+    layout = go.Layout(
+        title=f"ROC Curve (AUC = {auc_score:.3f})",
+        xaxis=dict(title="False Positive Rate", gridcolor="#2f3445"),
+        yaxis=dict(title="True Positive Rate", gridcolor="#2f3445"),
+        legend=dict(x=0, y=1.05, orientation="h"),
+        margin=dict(l=100, r=10, t=25, b=40),
+        plot_bgcolor="#282b38",
+        paper_bgcolor="#282b38",
+        font={"color": "#a5b1cd"},
+    )
+
+    data0 = [trace0]
+    figure = go.Figure(data=data0, layout=layout)
+
+    return figure
+
+
+def serve_pie_confusion_matrix():
+    # Compute threshold
+    #     scaled_threshold = threshold * (Z.max() - Z.min()) + Z.min()
+    #     y_pred_test = (model.decision_function(X_test) > scaled_threshold).astype(int)
+
+    matrix = confusion_matrix(y_true=df_churn, y_pred=preds)
+    tn, fp, fn, tp = matrix.ravel()
+
+    values = [tp, fn, fp, tn]
+    label_text = ["True Positive", "False Negative", "False Positive", "True Negative"]
+    labels = ["TP", "FN", "FP", "TN"]
+    blue = cl.flipper()["seq"]["9"]["Blues"]
+    red = cl.flipper()["seq"]["9"]["Reds"]
+    colors = ["#13c6e9", blue[1], "#ff916d", "#ff744c"]
+
+    trace0 = go.Pie(
+        labels=label_text,
+        values=values,
+        hoverinfo="label+value+percent",
+        textinfo="text+value",
+        text=labels,
+        sort=False,
+        marker=dict(colors=colors),
+        insidetextfont={"color": "white"},
+        rotation=90,
+    )
+
+    layout = go.Layout(
+        title="Confusion Matrix",
+        margin=dict(l=50, r=50, t=100, b=10),
+        legend=dict(bgcolor="#282b38", font={"color": "#a5b1cd"}, orientation="h"),
+        plot_bgcolor="#282b38",
+        paper_bgcolor="#282b38",
+        font={"color": "#a5b1cd"},
+    )
+
+    train_data_X_pred_xgb01_70acc = [trace0]
+    figure = go.Figure(data=data0, layout=layout)
+
+    return figure

@@ -259,7 +259,7 @@ def churn_data_tab():
                             {"label": "Predicted Results", "value": "pred_res"},
                             {"label": "Test Data", "value": "test"},
                             {"label": "Churn Customers", "value": "churn_cust"},
-                            {"label": "Churn Changes", "value": "churn_changes"},
+                            # {"label": "Churn Changes", "value": "churn_changes"},
                         ],
                         value="pred_res",
                     ),
@@ -297,29 +297,29 @@ def churn_data_tab():
     )
 
 
-# def serve_roc_curve():
-#     fpr, tpr, threshold = roc_curve(df_churn, preds)
-#     auc_score = roc_auc_score(y_true=df_churn, y_score=preds)
+def serve_roc_curve():
+    fpr, tpr, threshold = roc_curve(df_churn, preds)
+    auc_score = roc_auc_score(y_true=df_churn, y_score=preds)
 
-#     trace0 = go.Scatter(
-#         x=fpr, y=tpr, mode="lines", name="Test Data", marker={"color": "#13c6e9"}
-#     )
+    trace0 = go.Scatter(
+        x=fpr, y=tpr, mode="lines", name="Test Data", marker={"color": "#13c6e9"}
+    )
 
-#     layout = go.Layout(
-#         title=f"ROC Curve (AUC = {auc_score:.3f})",
-#         xaxis=dict(title="False Positive Rate", gridcolor="#2f3445"),
-#         yaxis=dict(title="True Positive Rate", gridcolor="#2f3445"),
-#         legend=dict(x=0, y=1.05, orientation="h"),
-#         margin=dict(l=100, r=10, t=25, b=40),
-#         plot_bgcolor="#282b38",
-#         paper_bgcolor="#282b38",
-#         font={"color": "#a5b1cd"},
-#     )
+    layout = go.Layout(
+        title=f"ROC Curve (AUC = {auc_score:.3f})",
+        xaxis=dict(title="False Positive Rate", gridcolor="#2f3445"),
+        yaxis=dict(title="True Positive Rate", gridcolor="#2f3445"),
+        legend=dict(x=0, y=1.05, orientation="h"),
+        margin=dict(l=100, r=10, t=25, b=40),
+        plot_bgcolor="#282b38",
+        paper_bgcolor="#282b38",
+        font={"color": "#a5b1cd"},
+    )
 
-#     data0 = [trace0]
-#     figure = go.Figure(data=data0, layout=layout)
+    data0 = [trace0]
+    figure = go.Figure(data=data0, layout=layout)
 
-#     return figure
+    return figure
 
 
 def serve_pie_confusion_matrix():
@@ -331,8 +331,7 @@ def serve_pie_confusion_matrix():
     tn, fp, fn, tp = matrix.ravel()
 
     values = [tp, fn, fp, tn]
-    label_text = ["True Positive", "False Negative",
-                  "False Positive", "True Negative"]
+    label_text = ["True Positive", "False Negative", "False Positive", "True Negative"]
     labels = ["TP", "FN", "FP", "TN"]
     blue = cl.flipper()["seq"]["9"]["Blues"]
     red = cl.flipper()["seq"]["9"]["Reds"]
@@ -353,66 +352,80 @@ def serve_pie_confusion_matrix():
     layout = go.Layout(
         title="Confusion Matrix",
         margin=dict(l=50, r=50, t=100, b=10),
-        legend=dict(bgcolor="#282b38", font={
-                    "color": "#a5b1cd"}, orientation="h"),
+        legend=dict(bgcolor="#282b38", font={"color": "#a5b1cd"}, orientation="h"),
         plot_bgcolor="#282b38",
         paper_bgcolor="#282b38",
         font={"color": "#a5b1cd"},
     )
 
-    train_data_X_pred_xgb01_70acc = [trace0]
+    data0 = [trace0]
     figure = go.Figure(data=data0, layout=layout)
 
     return figure
 
+
 def churn_model_tab_layout():
 
-    # roc_figure = serve_roc_curve()
+    roc_figure = serve_roc_curve()
 
-    # confusion_figure = serve_pie_confusion_matrix()
+    confusion_figure = serve_pie_confusion_matrix()
 
-
-    return html.Div([
+    return html.Div(
+        [
             html.Br(),
             html.Br(),
-            
             html.H6(
                 children=["Select ML model"],
                 style={"text-align": "center"},
             ),
-
             dcc.Dropdown(
-                    id='model-select-dropdown',
-                    options=[
-                        {'label': 'xgboost', 'value': 'xgboost'},
-                    ],
-                    value='xgboost',
-                    clearable=False,
-                    ),
-            
+                id="model-select-dropdown",
+                options=[
+                    {"label": "xgboost", "value": "xgboost"},
+                ],
+                value="xgboost",
+                clearable=False,
+            ),
+            html.Br(),
+            html.Br(),
             html.Div(
                 id="graphs-container",
                 children=[
-                    # dcc.Loading(
-                    #     className="graph-wrapper",
-                    #     children=dcc.Graph(id="graph-line-roc-curve",figure=roc_figure)
-                    # ), 
-                    # dcc.Loading(
-                    #     className="graph-wrapper",
-                    #     children=dcc.Graph(
-                    #         id="graph-pie-confusion-matrix", figure=confusion_figure
-                    #     ),
-                    # ),
-                ]
-            )
-            
-       
-
-
-
-        ])
-  
-  
+                    html.Div(
+                        children=[
+                            dcc.Loading(
+                                className="graph-wrapper",
+                                children=dcc.Graph(
+                                    id="graph-line-roc-curve", figure=roc_figure
+                                ),
+                            )
+                        ],
+                        style={
+                            "display": "inline-block",
+                            "float": "left",
+                            "width": "50%",
+                        },
+                    ),
+                    html.Div(
+                        children=[
+                            dcc.Loading(
+                                className="graph-wrapper",
+                                children=dcc.Graph(
+                                    id="graph-pie-confusion-matrix",
+                                    figure=confusion_figure,
+                                ),
+                            ),
+                        ],
+                        style={
+                            "display": "inline-block",
+                            "float": "left",
+                            "width": "50%",
+                        },
+                    ),
+                ],
+            ),
+        ]
+    )
 
 
 def tab_layout():
@@ -444,9 +457,7 @@ def tab_layout():
                         value="tab-3",
                         style=tab_style,
                         selected_style=tab_selected_style,
-                        children=[
-                            churn_model_tab_layout()
-                            ],
+                        children=[churn_model_tab_layout()],
                     ),
                 ],
             ),
