@@ -13,7 +13,7 @@ import pandas as pd
 from data_reader import data, data_pred
 
 
-from layouts import two_tab_layout
+from layouts import tab_layout
 import dash_table
 from data_reader import *
 
@@ -40,7 +40,7 @@ server = app.server
 
 
 
-app.layout = two_tab_layout()
+app.layout = tab_layout()
 
 
 ## callbacks
