@@ -1,6 +1,7 @@
 import dash_core_components as dcc
 import dash_html_components as html
 from data_reader import *
+
 import dash_table
 
 from graphs import *
@@ -48,6 +49,7 @@ whole_container = {
     "display": "flex",
     "text-align": "center",
 }
+
 
 tab_style = {"fontWeight": "bold", "font-size": "22px"}
 
