@@ -8,3 +8,5 @@ seaborn
 dash_auth
 joblib
 colorlover
+xgboost
+scikit-learn
