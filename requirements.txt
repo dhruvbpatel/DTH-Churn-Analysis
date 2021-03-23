@@ -6,3 +6,6 @@ gunicorn
 plotly
 seaborn
 dash_auth
+joblib
+colorlover
+warnings
