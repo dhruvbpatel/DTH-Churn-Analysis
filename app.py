@@ -160,7 +160,7 @@ def dropdown_columns(value):
 def update_datatable_column(data_value, col_value):
 
     if data_value == "train":
-        DataFrame = data
+        dframe = data
     elif data_value == "test":
         dframe = test_data
     elif data_value == "pred_res":
