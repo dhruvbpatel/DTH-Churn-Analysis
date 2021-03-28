@@ -1,5 +1,5 @@
 # DTH Churn Analysis
-Repo for DTH customer churn analysis project
+Repo for DTH customers churn analysis project
 
 
 #### How to run the project:
