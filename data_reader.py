@@ -10,7 +10,7 @@ data = pd.read_csv("./data/dth_data_1.csv")  ## train data
 data_pred = pd.read_csv("./data/df_train_all_pred.csv")  ## predictions on all training data
 test_data = pd.read_csv("./data/dth_test_data_5k.csv")  ## test data
 pred_changes = pd.read_csv("./data/df_final_pred_change.csv")  ## csv showing only changes in churn
-
+pred_sentiment = pd.read_csv("./data/final_pred.csv")
 ## read models
 xgboost_model = load("./saved_models/xgb01.dat")
 

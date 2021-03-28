@@ -1,7 +1,7 @@
 import dash_core_components as dcc
 import dash_html_components as html
 from data_reader import *
-
+from Sentiment import *
 import dash_table
 
 from graphs import *
@@ -429,6 +429,164 @@ def churn_model_tab_layout():
         ]
     )
 
+def sentiment_tab():
+    return html.Div(
+        [
+            html.Br(),
+            html.Br(),
+            html.H1(
+                children="Sentiment Analysis", style={"color": "black", "textAlign": "center"}
+           ),
+
+        html.Div(
+                [
+                    html.Div(
+                        [
+                            html.Div(
+                                [
+                                    html.P(
+                                        html.B(
+                                            "Review Count",
+                                            style={"font-size": "25px"},
+                                        )
+                                    ),
+                                    html.P(
+                                        no_with_comma(review_count),
+                                        style={"font-size": "22px"},
+                                    ),
+                                ],
+                                style=mini_container_style,
+                            ),
+                            # html.Div([html.P("<b>Active Customer</b>"),html.P(no_with_comma(active_customer))],style = mini_container_style),
+                            html.Div(
+                                [
+                                    html.P(
+                                        html.B(
+                                            "Positive Count",
+                                            style={"font-size": "25px"},
+                                        )
+                                    ),
+                                    html.P(
+                                        no_with_comma(positive),
+                                        style={"font-size": "22px"},
+                                    ),
+                                ],
+                                style=mini_container_style,
+                            ),
+                            html.Div(
+                                [
+                                    html.P(
+                                        html.B(
+                                            "Negative Count", style={"font-size": "25px"}
+                                        )
+                                    ),
+                                    html.P(
+                                        no_with_comma(negative),
+                                        style={"font-size": "22px"},
+                                    ),
+                                ],
+                                style=mini_container_style,
+                            ),
+                            html.Div(
+                                [
+                                    html.P(
+                                        html.B(
+                                            "Neutral Count",
+                                            style={"font-size": "25px"},
+                                        )
+                                    ),
+                                    html.P(
+                                        no_with_comma(neutral),
+                                        style={"font-size": "22px"},
+                                    ),
+                                ],
+                                style=mini_container_style,
+                            ),
+                        ],
+                        style=whole_container,
+                    )
+                ],
+                className="row",
+            ),
+             html.Div(
+                children=[
+                    html.Div(
+                        [
+                            html.Div(
+                                children=[
+                                    dcc.Graph(
+                                        id="sg1",
+                                        figure=senti_pie,
+                                        style={
+                                            "display": "inline-block",
+                                            "width": "50%",
+                                            "text-align": "center",
+                                        },
+                                    ),
+
+                                    dcc.Graph(
+                                        id="sg2",
+                                        figure=senti_barh,
+                                        style={
+                                            "display": "inline-block",
+                                            "width": "50%",
+                                        },
+                                    ),
+                                    
+                                ],
+                                style={"display": "flex"},
+                            )
+                            
+                        ]
+                    ),
+                ]
+            ),
+
+             html.Div(
+                        [
+                            html.Div(
+                                children=[
+                                    dcc.Graph(
+                                        id="sg3",
+                                        figure=senti_word,
+                                        style={
+                                            "display": "inline-block",
+                                            "width": "50%",
+                                        },
+                                    ),
+                                ],
+                                style={"display": "flex"},
+                            )
+                        ]
+                    ),
+
+            html.Br(),
+            html.H6(
+                children=["Select Dataset to be Displayed"],
+                style={"text-align": "center"},
+            ),
+            html.Div(
+                [
+                    dcc.Dropdown(
+                        id="dropdown-table1",
+                        options=[
+                            {"label": "Positive Reviews", "value": "positive_r"},
+                            {"label": "Negative Reviews", "value": "negative_r"},
+                            {"label": "Neutral Reviews", "value": "neutral_r"},
+                        ],
+                        value="neutral_r",
+                    ),
+                ]
+            ),
+
+            html.Br(),
+            html.Br(),
+            html.Div(id="table-div_r")
+
+        ]
+    )
+    
+
 
 def tab_layout():
     return html.Div(
@@ -461,7 +619,16 @@ def tab_layout():
                         selected_style=tab_selected_style,
                         children=[churn_model_tab_layout()],
                     ),
+
+                    dcc.Tab(
+                        label="Sentiment Analysis",
+                        value="tab-4",
+                        style=tab_style,
+                        selected_style=tab_selected_style,
+                        children=[sentiment_tab()],
+                    ),
                 ],
             ),
         ]
     )
+
