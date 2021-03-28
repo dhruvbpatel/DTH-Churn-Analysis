@@ -1,3 +1,13 @@
+
+import plotly.express as px
+import plotly.graph_objects as go
+
+from Sentiment import *
+from data_reader import *
+import pandas as pd
+
+from layouts import tab_layout
+import dash_table
 import dash
 import dash_auth
 
@@ -5,14 +15,6 @@ import dash_html_components as html
 import dash_core_components as dcc
 from dash.dependencies import Input, Output
 
-import plotly.express as px
-import plotly.graph_objects as go
-
-from data_reader import *
-import pandas as pd
-
-from layouts import tab_layout
-import dash_table
 
 
 # colour = ["#290934", "#40204a", "#583861", "#705079", "#896a91"]
@@ -193,6 +195,48 @@ def update_datatable_column(data_value, col_value):
         css=[{"selector": ".row-1", "rule": "min-height: 500px;"}],
     )
 
+@app.callback(
+    Output("table-div_r", "children"),
+    Input("dropdown-table1", "value"),
+)
+def dropdown_columns_sentiment(value):
+    dframe = pred_sentiment
+    if value == "positive_r":
+        dframe = dframe[dframe["Predicted_Sentiment"]=="Positive"]
+    elif value == "negative_r":
+        dframe = dframe[dframe["Predicted_Sentiment"]=="Negative"]
+    elif value == "neutral_r":
+        dframe = dframe[dframe["Predicted_Sentiment"]=="Neutral"]
+
+    # options = []
+    # for col in dframe:
+    #     options.append({"label": "{}".format(col, col), "value": col})
+    # if col_value:
+    #     dframe = pd.DataFrame(dframe[col_value])
+
+    return dash_table.DataTable(
+        id="table2",
+        columns=[{"name": i, "id": i} for i in dframe.columns],
+        data=dframe.to_dict("records"),
+        page_size=15,
+        fixed_rows={"headers": True},
+        filter_action="native",
+        style_header={"backgroundColor": "rgb(230, 230, 230)", "fontWeight": "bold"},
+        style_table={"height": 400},
+        style_data={
+            "width": "{}%".format(100.0 / len(dframe.columns)),
+            "textOverflow": "hidden",
+        }
+        # css=[{
+        #     'selector': 'table',
+        #     'rule': 'table-layout: fixed'  # note - this does not work with fixed_rows
+        # }],
+        ,
+        style_cell={"min-width": "100px"},
+        css=[{"selector": ".row-1", "rule": "min-height: 500px;"}],
+    )
+
+    
 
 if __name__ == "__main__":
     app.run_server(debug=False, port=8051)
