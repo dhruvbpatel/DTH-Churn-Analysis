@@ -10,3 +10,4 @@ joblib
 colorlover
 xgboost
 scikit-learn
+textblob
