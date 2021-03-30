@@ -11,3 +11,4 @@ colorlover
 xgboost
 scikit-learn
 textblob
+pytest

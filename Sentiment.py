@@ -93,7 +93,7 @@ senti_word = px.bar(plot_df, x="Word", y="Frequency")
 review_count=0
 for i in review:
   review_count+=1
-print(review_count)
+# print(review_count)
 #fig.show()
 #word_freq_graph = plt.bar(*zip(*x.items()),color=newcolor)
 #plt.show()
