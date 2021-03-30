@@ -16,6 +16,11 @@ def no_to_percentage(n):
 
 
 # For individual boxes at top like total active cases, recovered etc.
+colors = {
+    'background': '#282b38',
+    #'text': '#7FDBFF'
+}    
+
 mini_container_style = {
     "border-radius": "10px",
     "background-color": "#f9f9f9",
@@ -250,7 +255,7 @@ def churn_data_tab():
             html.Br(),
             html.H6(
                 children=["Select Dataset to be Displayed"],
-                style={"text-align": "center"},
+                style={"text-align": "center",  "font-size": "20px", "color": "black", "font-weight":"bold"},
             ),
             html.Div(
                 [
@@ -271,7 +276,7 @@ def churn_data_tab():
             html.Br(),
             html.H6(
                 children=["Select Columns to Display In table"],
-                style={"text-align": "center"},
+                style={"text-align": "center",  "font-size": "20px", "color": "black", "font-weight":"bold"},
             ),
             html.Div(
                 [
@@ -337,7 +342,7 @@ def serve_pie_confusion_matrix():
     labels = ["TP", "FN", "FP", "TN"]
     blue = cl.flipper()["seq"]["9"]["Blues"]
     red = cl.flipper()["seq"]["9"]["Reds"]
-    colors = ["#13c6e9", blue[1], "#ff916d", "#ff744c"]
+    colors = ["#2c3e50", "#bdc3c7", "#f39c12", "#e74c3c", "#7ccc63"]
 
     trace0 = go.Pie(
         labels=label_text,
@@ -377,8 +382,8 @@ def churn_model_tab_layout():
             html.Br(),
             html.Br(),
             html.H6(
-                children=["Select ML model"],
-                style={"text-align": "center"},
+                .center-children=["Select ML Model"],
+                style={"text-align": "center", "font-size": "20px", "color": "black", "font-weight":"bold"},
             ),
             dcc.Dropdown(
                 id="model-select-dropdown",
@@ -388,6 +393,32 @@ def churn_model_tab_layout():
                 value="xgboost",
                 clearable=False,
             ),
+            html.Br(),
+            html.Br(),
+            html.Div(children=[], style={
+                                            "display": "inline-block",
+                                            "float":"left",
+                                            "width": "25%",
+                                        },),
+            
+            html.Div(
+                children = [
+                    dcc.Graph(
+                                        id="bar-pred-churn",
+                                        figure=fig_pred_churn,
+                                        style={
+                                            "display": "inline-block",
+                                            "width": "50%",
+                                        },
+                                    ),
+                    ]
+                ),
+            html.Div(children=[], style={
+                                            "display": "inline-block",
+                                            "float":"left",
+                                            "width": "25%",
+                                        },),
+            
             html.Br(),
             html.Br(),
             html.Div(
@@ -563,7 +594,7 @@ def sentiment_tab():
             html.Br(),
             html.H6(
                 children=["Select Dataset to be Displayed"],
-                style={"text-align": "center"},
+                style={"text-align": "center",  "font-size": "20px", "color": "black", "font-weight":"bold"},
             ),
             html.Div(
                 [

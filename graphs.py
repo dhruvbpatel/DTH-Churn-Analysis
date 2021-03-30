@@ -91,8 +91,8 @@ def serve_roc_curve():
         yaxis=dict(title="True Positive Rate", gridcolor="#2f3445"),
         legend=dict(x=0, y=1.05, orientation="h"),
         margin=dict(l=100, r=10, t=25, b=40),
-        plot_bgcolor="#282b38",
-        paper_bgcolor="#282b38",
+        #plot_bgcolor="#282b38",
+        #paper_bgcolor="#282b38",
         font={"color": "#a5b1cd"},
     )
 
@@ -115,7 +115,7 @@ def serve_pie_confusion_matrix():
     labels = ["TP", "FN", "FP", "TN"]
     blue = cl.flipper()["seq"]["9"]["Blues"]
     red = cl.flipper()["seq"]["9"]["Reds"]
-    colors = ["#13c6e9", blue[1], "#ff916d", "#ff744c"]
+    #colors = ["#2c3e50", "#7ccc63", "#bdc3c7", "#f39c12", "#e74c3c"]
 
     trace0 = go.Pie(
         labels=label_text,
@@ -142,3 +142,13 @@ def serve_pie_confusion_matrix():
     figure = go.Figure(data=data0, layout=layout)
 
     return figure
+
+pred_churn = dict(data_pred["pred_churn"].value_counts())
+fig_pred_churn = px.bar(
+    x=list(pred_churn.keys()),
+    y=list(pred_churn.values()),
+    color=colour[:2],
+    color_discrete_map="identity",
+    title="<b>Churn</b>",
+    labels={"x": "Churn", "y": "Number of users"},
+)

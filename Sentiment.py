@@ -58,11 +58,23 @@ elif(polarity>0.00):
     print("Positive")'''
 
 
-sizes = [neutral,negative,positive]
+colour = ["#bdc3c7", "#e74c3c", "#2c3e50", "#f39c12", "#7ccc63"]
+
+sizes = [neutral,negative,positive] 
 label = ['Netural' , 'Negative','Positive']
 senti_pie = px.pie(values=sizes, names=label)
+senti_pie.update_layout(title_text="<b> Distribution of Sentiment (%)</b>")
+senti_pie.update_traces(marker=dict(colors=["#bdc3c7", "#e74c3c", "#2c3e50"]))
 #fig.show()
-senti_barh = px.bar(x=sizes, y = label,orientation='h')
+
+
+senti_barh = px.bar(x=sizes,
+                    y = label,orientation='h',
+                    color=colour[:3],
+                    color_discrete_map="identity", 
+                    title="<b>Distribution of Sentiment </b>",
+                    labels={"x": "Count", "y": "Sentiment"},)
+
 #fig.show()
 #sen_graph = plt.barh(label,sizes,color=newcolor)
 
@@ -87,7 +99,10 @@ plot_df = word_freq_df[:5]
 plot_df
 
 
-senti_word = px.bar(plot_df, x="Word", y="Frequency")
+senti_word = px.bar(plot_df, x="Word", 
+                    y="Frequency",  
+                    color=colour,
+                    color_discrete_map="identity" )
 
 
 review_count=0
