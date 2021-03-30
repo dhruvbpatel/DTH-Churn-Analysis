@@ -1,6 +1,6 @@
 # DTH Churn Analysis
 
-![](https://github.com/dhruvbpatel/DTH-Churn-Analysis/workflows/Python%20application/badge.svg)
+![CI-CD Build](https://github.com/dhruvbpatel/DTH-Churn-Analysis/actions/workflows/dash-app.yml/badge.svg)
 
 
 Repo for DTH customers churn analysis project

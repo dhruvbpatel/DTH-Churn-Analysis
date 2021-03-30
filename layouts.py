@@ -382,7 +382,7 @@ def churn_model_tab_layout():
             html.Br(),
             html.Br(),
             html.H6(
-                .center-children=["Select ML Model"],
+                children=["Select ML Model"],
                 style={"text-align": "center", "font-size": "20px", "color": "black", "font-weight":"bold"},
             ),
             dcc.Dropdown(
