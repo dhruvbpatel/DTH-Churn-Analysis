@@ -153,6 +153,6 @@ fig_pred_churn = px.bar(
     y=list(pred_churn.values()),
     color=colour[:2],
     color_discrete_map="identity",
-    title="<b>Churn</b>",
+    title="<b>Predicted Churn</b>",
     labels={"x": "Churn", "y": "Number of users"},
 )

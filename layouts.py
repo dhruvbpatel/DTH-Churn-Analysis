@@ -5,6 +5,7 @@ from Sentiment import *
 import dash_table
 
 from graphs import *
+import base64
 
 
 def no_with_comma(n):
@@ -395,14 +396,12 @@ def churn_model_tab_layout():
             ),
             html.Br(),
             html.Br(),
-            html.Div(children=[], style={
-                                            "display": "inline-block",
-                                            "float":"left",
-                                            "width": "25%",
-                                        },),
-            
+                       
             html.Div(
                 children = [
+                    html.Center(
+                        children = [
+                    
                     dcc.Graph(
                                         id="bar-pred-churn",
                                         figure=fig_pred_churn,
@@ -411,14 +410,10 @@ def churn_model_tab_layout():
                                             "width": "50%",
                                         },
                                     ),
+                        ])
                     ]
                 ),
-            html.Div(children=[], style={
-                                            "display": "inline-block",
-                                            "float":"left",
-                                            "width": "25%",
-                                        },),
-            
+                      
             html.Br(),
             html.Br(),
             html.Div(
@@ -459,6 +454,13 @@ def churn_model_tab_layout():
             ),
         ]
     )
+
+
+# def image_display_func():
+    # image_filename = './data/wordcloud-img.png'
+    # encoded_image = base64.b64encode(open(image_filename, 'rb').read())
+#     return 'data:image/png;base64,{}'.format(encoded_image)
+
 
 def sentiment_tab():
     return html.Div(
@@ -582,12 +584,12 @@ def sentiment_tab():
                                         figure=senti_word,
                                         style={
                                             "display": "inline-block",
-                                            "width": "50%",
+                                            "width": "100%",
                                         },
                                     ),
                                 ],
                                 style={"display": "flex"},
-                            )
+                            ),
                         ]
                     ),
 
@@ -617,7 +619,6 @@ def sentiment_tab():
         ]
     )
     
-
 
 def tab_layout():
     return html.Div(
