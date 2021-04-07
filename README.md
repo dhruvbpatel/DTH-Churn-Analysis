@@ -19,6 +19,6 @@ Repo for DTH customers churn analysis project
  3. Now install dependencies in the environment via running below code.
    `pip install -r requirements.txt` 
    
- 4.	now after dependencies is installed, run app via:
+ 4.	now after dependencies is installed, run application via:
 	 `python app.py`
  5.	This will open the dash app in your localhost
