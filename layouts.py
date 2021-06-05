@@ -221,7 +221,7 @@ def churn_data_tab():
                                 [
                                     html.P(
                                         html.B(
-                                            "Predicted Churn Count %",
+                                            "Predicted Churn Count in percentage:",
                                             style={"font-size": "25px"},
                                         )
                                     ),
